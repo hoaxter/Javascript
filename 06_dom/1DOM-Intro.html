@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Document</title>
+</head>
+<body>
+    <div class="bg-black">
+        <h1 id="firstHeading">1</h1>
+        <h1 class="heading"> DOM LEARNING </h1>
+        <p>Lorem ipsum dolor sit amet.</p>
+        <p>The Document Object Model (DOM) in JavaScript is a programming interface for web documents (HTML, XML, and SVG). It represents the structure of a document as a logical tree of objects, where each node in the tree represents a part of the document, such as an element, attribute, or text.</p>
+    </div>
+        <a href="https://nitinsikarwar.com"></a>
+        <a href="//en.wikipedia.org/wiki/Wikipedia:Contact_us"></a>
+</body>
+
+<script>
+    console.log(window); //its a complex object  // it contain many other objects and methods
+    console.log(window.document); // it contain the body and structure of the web page
+    console.log(document); // the document is used so much that we can directly access it without using windows.
+    console.dir(document); // we have seen in windows that document have many other info but it was just showing html sturcture so we use dir to see the complete object we have more like doucment.warning , document.title etc
+    console.log(document.contentType); // it will give us the content type of the page
+    console.log(document.baseURI); // will give us the base uri of the page  // uri stands for uniform resource identifier it is same as url the difference is url is a subset of uri eg url is a web address but uri can be anything like email address, phone number etc
+    console.log(document.links); // it will show two links and its show result in htmlcollection which is not an array // we cannot use array methods on it
+    console.log(document.links[1]); // but we can access links through index
+    console.log(document.getElementById('firstHeading'));  // we can select an element using its id, it returns the element only as its unique.
+    document.getElementById('firstHeading').innerHTML = "2"; // here we are selecting the element using its id and manipulating it using innerHTML that change the element with its html structure
+    console.log(document.getElementsByClassName("heading")); // we can select an element using its class name , it returns the htmlcollection as class name can be used in for multiple elements
+    document.getElementsByClassName('heading')[0].innerHTML = "<h1>we are learning DOM</h1>" // here we are selecting the element using its class and giving the array number to select the particular element of that class and manipulating it using innerHTML that change the element with its html structure
+    
+</script>
+
+// DOM JavaScript ke andar ek aisa object hai jo hume webpage ke structure ko manipulate karne ka access deta hai.
+// har ek webpage ka ek DOM hota hai jo us webpage ke structure ko represent karta hai
+<!--   Document object model of this webpage
+            window
+              |
+           document
+              |   
+             HTML
+            /    \
+           /      \
+        Head      Body -- 2a -- attribute(href) 
+       /   |        |  
+   title  meta     div -- attribute 
+     /      |      |  \
+text-node attribue h1  p-- textnode 
+                   /\
+           attribue  textnode 
+
+everything is a node head, body, meta , html, document
+textnode: text inside a node.
+attribute: property of that particular node like <meta charset="UTF-8">
+-->
+</html>

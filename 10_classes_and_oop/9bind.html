@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React</title>
+</head>
+<body>
+    <button>Button Clicked</button>
+</body>
+<script>
+    // bind() does not immediately call the function.
+    // Instead, it creates and returns a new function where the value of this is permanently fixed to whatever you pass in.
+
+    class React {
+        constructor(){
+            this.library = "React"
+            this.server = "https://localhost:300"
+
+            // Attach an event listener to the button
+            // BUT: when the button is clicked, the function `handleClick`
+            // will be called by the browser, not by our class.
+            // By default, in JS, "this" inside event handlers refers to the element
+            // (here: <button>) instead of our class instance.
+            // To fix this, we use .bind(this) to "lock" the value of "this"
+            // so it always points to our React instance.
+            document
+                .querySelector('button')
+                .addEventListener('click', this.handleClick.bind(this))
+        }
+
+        handleClick(){
+            // Because of .bind(this), "this" here still refers
+            // to the React class instance, NOT the button element.
+            console.log("button clicked");
+            console.log(this.server); // prints "https://localhost:300"
+            // Without .bind(this), this.server would be undefined, because this would refer to the button element.
+            // With .bind(this), this is permanently tied to the React class instance, so you can safely access this.server.
+        }
+    }
+
+    const app = new React()
+</script>
+</html>
+
+
+<!-- 
+If you used .bind(this)
+    You’re passing a new function to addEventListener.
+    That new function will remember that this means the React instance.
+    The browser calls it later, but this is still correct.
+
+
+If you used .call(this) instead
+    this.handleClick.call(this)
+    This would immediately execute handleClick once when the constructor runs.
+    Nothing would actually be left for the event listener to call later.
+    The button click would do nothing.
+
+If you used .apply(this, []) instead
+    Same as call, it would immediately invoke handleClick once.
+    Again, nothing is left for future clicks. 
+
+
+bind → gives addEventListener a function that can be called later, with the correct this.
+call / apply → call the function immediately and don’t give addEventListener anything useful to run later.
+-->

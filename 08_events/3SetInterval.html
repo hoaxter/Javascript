@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>SetInterval Javascript</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+</body>
+<script>
+
+const ref = setInterval(() => {  // Set interval will keep repeating the same task after the specific interval
+    console.log("nitin");    
+}, 5000); 
+// we dont need to call like ref() because setInterval will keep calling the function after every 5 seconds
+// ref(); // this will not work because ref is not a function it is a reference to the interval
+
+clearInterval(ref);  // we can clear it by givin its reference
+
+const sayDate = function(str){ // taking a parameter here for the third parameter of setInterval
+    console.log(str, Date.now());
+}
+
+let intervalId;
+
+document.querySelector('#start').addEventListener("click", () => {
+    intervalId = setInterval(sayDate, 1000, "hi") // we can also take the reference of the handler/call-back function and there is a third parameter too where we can give a string 
+});
+
+document.querySelector("#stop").addEventListener("click", () => {
+    clearInterval(intervalId);
+    intervalId = null;  // just to make sure that the intervalId contain a null value after stop
+});
+
+</script>
+</html>

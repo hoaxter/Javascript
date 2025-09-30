@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>htnml Events </title>
+</head>
+<body style="background-color: #414141; color: aliceblue;">
+    <h2>Amazing image</h2>
+    <div >
+        <ul id="images">
+            <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+            <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="" ></li>
+            <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+        </ul>
+   </div>
+</body>
+<script>
+
+    // document.getElementById('owl').onclick = function() { // old approach it is not recommended 
+    //     console.log('owl clicked!');
+    // }
+    // onclick uses a callback function when the event is triggered
+    // drawback of this approach is that if we write another onclick method
+    // it will overwrite the previous one
+
+    // attachEvent() // old
+    // jQuery - on   // old
+
+
+    // addEventListener() 
+    // It have parameters
+    // 1. type of event like click, mouseover, mouseout, mousemove, mousedown, mouseup, dblclick
+    // 2. callback function - it is called when the event is triggered  
+    // 3. useCapture - it is a boolean value, it is false by default, it is used for bubbling and capturing
+    // In addEventListener() we can write multiple event listeners on the same element without overwriting the previous one
+    document.getElementById('owl').addEventListener('click',function (){ // it is the best approach, in this we give the type of event like 'click', a callback function and third parameter is false by default, we can use arrow function here too
+        console.log('owl clicked');
+    }, false)    
+   
+    
+    // removeEventListener() 
+    // it is used to remove the event listener we have added
+    // removeEventListener() takes the same parameters as addEventListener() but the function should be named function not an anonymous function because we have to refer the same function to remove it
+    // eg: 
+    // function clickOwl(){
+    //     console.log('owl clicked again');
+    // }
+
+    // document.getElementById('owl').addEventListener('click', clickOwl, false) // here we are adding another event listener to the same element without overwriting the previous one
+    // document.getElementById('owl').removeEventListener('click', clickOwl, false) // here we are removing the event listener we have added
+
+
+
+    document.getElementById('owl').addEventListener('click', function (e) {  // it give us broswer and environment events as we have given a e in the function it will show us the event it is
+        // e is the event object and it is passed automatically to the function
+        // e is a pointer event it contains all the information about the event
+        console.log(e);  //  it is a pointer event
+        console.log(e.type);  // it shows the type of event
+        console.log(e.target);  // it shows who triggered it
+    })
+
+    // Below event Should be studtied
+    // type, timestamp, defaultPrevented
+    // target, toElement, srcElement, currentTarget,
+    // clientX, clientY, screenX, screenY
+    // altkey, ctrlkey, shiftkey, keyCode
+
+    // Bubbling and Caputring
+    // Bubbling : When an event is triggered on an element, it first runs the handlers on it, then on its parent, then all the way up on other ancestors. This is called bubbling because the event bubbles up from the innermost element to the outer ones.
+
+    // uncomment it when you are here
+    // document.getElementById('images').addEventListener('click', function(e){
+    //     console.log("clicked inside the ul");
+    // }, false)  // when the third parameter is false means it is bubbling event the event will move from inside to outside means from img-> li -> ul
+
+    // document.getElementById('river').addEventListener('click', function(e){
+    //     console.log("river clicked");
+    // }, false)
+     
+    // Capturing: When an event is triggered on an element, it first runs the handlers on the outermost element, then on its child, then all the way down to the target element. This is called capturing because the event captures from the outermost element to the innermost one.
+
+    // document.getElementById('images').addEventListener('click', function(e){
+    // console.log("clicked inside the ul");
+    // }, true)  
+
+    // document.getElementById('prayer').addEventListener('click', function(e){
+    //     console.log("prayer clicked");
+    // }, true) // when the third parameter is true means it is a capturing event the event will move from outside to inside means from ul -> li -> img
+    
+    // Stopping Bubbling and caputring
+    // document.getElementById('river').addEventListener('click', function(e){
+    //     console.log("river clicked");
+    //     e.stopPropagation();  // it will stop bubbling
+    // }, false) 
+
+    document.getElementById('google').addEventListener('click',function(e){
+        e.preventDefault();  // it will stop the link from opening
+        e.stopPropagation()  // it will stop its bubbling  , uncomment the bubbling of images before this running this
+        console.log("google clicked");
+    }, false)
+   
+    // removing images on clicking ------------------------------------------
+
+    // document.querySelector('#images').addEventListener('click', (e)=>{
+    
+    //     console.log(e.target.tagName); // it give what type of tagname is target -> audio, video, img
+    //     if(e.target.tagName === "IMG"){ 
+    //           e.target.parentNode.remove(); // parentNode give the parent element of the target in this case the parent of the img element is li
+    //     } // we are using if statement rather writing removing part directly so if one click on the li item it will take the ul as its parentnode and will remove it. thats why we are using if cond.
+    // });
+    
+    //e.target.parentNode.parentNode.removeChild(e.target.parentNode) // another method for removing it will take the parentnode ul and will remvoe its childitem li
+</script>
+</html> 

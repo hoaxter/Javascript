@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM</title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+    <div class="parent">
+        <!-- this is a comment -->
+        <div class="day">Monday</div>
+        <div class="day">Tuesday</div>
+        <div class="day">Wednesday</div>
+        <div class="day">Thursday</div>
+    </div>
+</body>
+<script>
+    window.addEventListener("DOMContentLoaded", () => { // using this to make sure nodejs output will be same as console js
+    
+    // Parent to Child
+    const parent = document.querySelector(".parent"); // it will give the whole structure of html parent class
+    console.log(parent.innerHTML);
+    console.log(parent.children); // this will give us a children of parent class in htmlcollection
+    console.log(parent.children[0].innerHTML); // this will show us only monday as because there is no html inside that div
+
+    for (let i = 0; i < parent.children.length; i++) { 
+        console.log(parent.children[i].innerHTML);
+    }
+
+    parent.children[1].style.color = "orange"
+    console.log(parent.firstElementChild); // it will give first child element of the parent
+    console.log(parent.lastElementChild); // it will give last child element of the parent
+    
+    // Child to parent
+    const dayone = document.querySelector('.day'); // it will give first ocurrence of class .day that is monday
+    console.log(dayone);
+
+    console.log(dayone.parentElement); // will give parent elemnt
+    console.log(dayone.nextElementSibling); // will give first occured sibling element
+    console.log("NODES: ", parent.childNodes); // it will give child nodes of the parent and will also include all things like line break as text and comments too
+    })
+</script>
+</html>

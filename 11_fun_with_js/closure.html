@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lexical scope and Closure</title>
+</head>
+<body style="background-color: #313131;">
+    <button id="orange">Orange</button>
+    <button id="green">Green</button>
+</body>
+
+    <script>
+    
+
+    // Lexical Scoping -> when the outer function properties are accessed by inner function
+    // note: -> Outer function cannot access inner function properties, two or more inner function cannot access each other properties
+
+    // function init() {              // outer function
+    //     let name = "Mozilla";      // Property
+    //     function displayName() {   // inner function
+    //         console.log(name);     // accessing outer function property
+    //     }
+    //     displayName();   // calling the innerfunction
+    // }
+    // init();  // calling the outer function 
+
+    // function outer(){ // outer function
+    //     let username = "hitesh"   // property
+    //     console.log("OUTER", secret);  // outer function trying to access inner function property
+    //     function inner(){        // inner function
+    //         let secret = "my123" // inner functiion property
+    //         console.log("inner", username);   // accessing outer function property
+    //     } 
+    //     function innerTwo(){   // inner function 
+    //         console.log("innerTwo", username);   // accessing the outer funciton property
+    //         console.log(secret); // trying to accessing 1st innerr function property
+    //     }
+    //     inner()          // calling inner function 1
+    //     innerTwo()       // callling inenr function 2
+
+    // }
+    // outer()    // calling outer function
+    // console.log("TOO OUTER", username);   accessing the outer function  property 
+
+ 
+    // function makeFunc() {             // outer function
+    //     const name = "Mozilla";       // contatant property of outer function
+    //     function displayName() {      // inner function
+    //         console.log(name);        // accessing outer function property
+    //     }
+    //     return displayName;           // the outer function returning the innerfunction reference 
+    // means where the outer function is called and when its return something it will return inner func. refercne means inner funciton will run. (function refernce is its definition)
+    // this is closure: now if the displayName is getting returned means the outer function runned successfully so its context will be removed from execution context
+    // so how will the inner function be able to access the outer funciton this is what call closure when returning it also return its lexical scope of outerfunction along with the refence of innerfunction
+    // }
+
+    // const myFunc = makeFunc();  // outerfunctiion 
+    // myFunc();      // outer function called 
+
+    </script>
+     
+    <script>
+        // closure: JavaScript closures allow inner functions to "remember" variables from their outer scope, even after the outer function has returned.
+        // Closure is a feature in JavaScript where an inner function has access to the outer (enclosing) function's variables and parameters, even after the outer function has returned. This allows the inner function to "remember" the environment in which it was created.
+        // eg:
+
+        // document.getElementById("orange").onclick = function(){   // using onclick without closure here we have to define function () {} for all color so lets go and make one funciton for this a handler.
+        //     document.body.style.backgroundColor = `orange`
+        // }
+        // document.getElementById("green").onclick = function(){
+        //     document.body.style.backgroundColor = `green`
+        // }
+
+        function clickHandler(color){                 // here we have defined our clickhandler
+            // document.body.style.backgroundColor = `${color}` // this was the first approach that we thought but it will instantly change the color of background as the script load and will not wait for the click
+            
+            // When you write clickHandler("orange"), you are calling the function immediately, not passing it as a handler.
+            // clickHandler("orange") runs right away when the script loads.
+            // It sets the background to orange instantly.
+            // Then it returns undefined.
+            // So effectively: document.getElementById('orange').onclick = undefined; // the button has no clickhandler anymore.
+            
+            // closure way
+            // Here clickHandler("orange") returns a function, instead of running the logic immediately.
+            // That returned function “remembers” the color value via closure.
+            // So only when the user clicks, the background changes.
+
+            return function(){
+                document.body.style.backgroundColor = `${color}`
+            }
+        }
+
+        document.getElementById('orange').onclick = clickHandler("orange")
+        document.getElementById('green').onclick = clickHandler("green")
+
+
+        // Direct definition: Executes immediately → nothing left for the click event.
+        // Closure-returned function: Defers execution until the click actually happens.
+
+        // Think of it like this:
+        // clickHandler("orange") = “give me a ready-made function that knows it should use orange later”.
+        // document.getElementById('orange').onclick = thatFunction; // If you don’t return a function, you’re just doing the work too early.
+
+
+        // Some points on closure
+        // Each call to clickHandler(color) creates a new closure with its own color.
+        // So the "orange" button remembers "orange", and the "green" button remembers "green".
+        // Without closure, both buttons would end up using the last value of color.
+        
+    </script>
+</html>
+

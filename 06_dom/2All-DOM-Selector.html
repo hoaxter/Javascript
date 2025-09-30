@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <title>DOM learning</title>
+    <style>
+        .bg-black{
+            background-color: #212121;
+            color: #fff;
+        }
+    </style>
+</head>
+<body class="bg-black">
+    <div >
+        <h1  id="title" class="heading">DOM learning with Nitin Sikarwar <span style="display: none;">test text</span></h1>
+        <h2>Lorem ipsum dolor sit.</h2>
+        <h2>Lorem ipsum dolor sit.</h2>
+        <h2>Lorem ipsum dolor sit.</h2>
+        <p>Lorem ipsum dolor sit amet.</p>
+        <input type="password" name="" id="">
+
+        <ul>
+            <li class="list-item">one</li>
+            <li class="list-item">two</li>
+            <li class="list-item">three</li>
+            <li class="list-item">four</li>
+        </ul>
+    </div>
+</body>
+<script>
+    console.log(document.getElementById('title').getAttribute('id')); // we have to tell in getAttribute which attribute we want so we will get its value
+    console.log(document.getElementById('title').getAttribute('class'));
+    document.getElementById('title').setAttribute('class', 'test') // we are here setting the value of attribute class from heading to test as set attrbute always overwrite
+    console.log(document.getElementById('title').getAttribute('class'));
+    document.getElementById('title').setAttribute('class', 'test heading');// we can use this to set another class wihout overwriting the present one
+    console.log(document.getElementById('title').getAttribute('class'));
+
+    const title = document.getElementById('title'); // creating a easy access for title element
+    title.style.backgroundColor = 'green';  // we can access styling css throught this
+    title.style.padding = "15px";
+    title.style.borderRadius = "15px";
+
+    console.log(title.textContent); // text content will show the value hidden using css by using display: none
+    console.log(title.innerText); // it will show the text content but will not show the hidden text content
+    console.log(title.innerHTML); // it will show the whole html structure of the element
+    
+    // query selector is a very powerfull selector we can select any element through it like id, class, tag name, attribute etc
+    // but it only select the first element if there are multiple elements of same. 
+    console.log(document.querySelector('h2')); // it will give the first h2
+    console.log(document.querySelector('#title'))
+    console.log(document.querySelector(".heading"))
+    console.log(document.querySelector('input[type="password"]')) // it will only give the input field with type=passowrd
+    
+    // changing the color of the whole ul as it does not have any class and id so we directly selecting it throught its name
+    const myul = document.querySelector('ul');
+    const turngreen = myul.querySelector('li'); // we can use further query on the myul variable to select the element inside it like text image or html structure
+    turngreen.style.backgroundColor = "green";
+    turngreen.style.padding = "10px";
+
+    console.log(turngreen.innerText);
+    turngreen.innerText = "five";
+
+    // querySelectorAll
+    const tmplist = document.querySelectorAll("li"); // it will give us a nodelist
+    // tmplist.style.color = 'green' // it will not work as its have mulitple elements
+    tmplist[0].style.color = 'green' 
+    const myH1 = document.querySelectorAll('h1');
+    tmplist[0].style.color = 'red' // even if there is only one element we still have to use index like in array's
+
+    tmplist.forEach(function (l) { // we can use foreach loop on nodelist
+        l.style.backgroundColor = 'green'
+    })
+    
+    const tempclasslist = document.getElementsByClassName('list-item'); // there is no foreach loop in htmlcollection so we can convert it into array
+    const myConvAry = Array.from(tempclasslist);
+    console.log(myConvAry);
+    // myConvAry.forEach(function(l){ // commented it off when you come here
+    //     l.style.color = 'yellow';
+    // })
+
+</script>
+</html>
+
+
+// htmlcollection and nodelist are array like object but not array's so we cannot use array methods on them like map, filter etc
+// but we can convert them into array's using Array.from() method
+// nodelist have foreach loop but htmlcollection does not have foreach loop
+// querySelectorAll returns nodelist and getElementsByClassName returns htmlcollection
+// htmlcollection is a live collection it means if we add any element in html it will automatically update in htmlcollection but nodelist is static it will not update automatically if we add any element in html
+// we can use for loop on both nodelist and htmlcollection
+// .length property is used to get the number of elements in nodelist and htmlcollection

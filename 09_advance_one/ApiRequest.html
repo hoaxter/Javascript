@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub Card</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #121212;
+      font-family: Arial, sans-serif;
+      color: white;
+      height: 100vh;
+      display: block;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #usernameInput {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      width: 250px;
+      font-size: 16px;
+      margin-bottom: 10px;
+      background-color: #2a2a2a;
+      color: white;
+      outline: none;
+    }
+
+    #usernameInput::placeholder {
+      color: #888;
+    }
+
+    #fetchBtn {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.2s ease;
+    }
+
+    #fetchBtn:hover {
+      background-color: #45a049;
+    }
+
+    .card {
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+      width: 300px;
+      text-align: center;
+    }
+
+    .card h1, .card h2 {
+      margin: 10px 0;
+      color: #4caf50;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="input-container">
+      <input type="text" id="usernameInput" placeholder="Enter GitHub username" />
+      <button id="fetchBtn">Send</button>
+    </div>
+    <br><br>
+    <div class="card" id="profileCard">
+      <h2>Enter a username and click Send</h2>
+    </div>
+  </div>
+
+  <script>
+
+// XML Http Request (Its a  heavy Legacy AJAX Programming based) (Asyncrhonous Javascript and XML)
+
+// | **Number** | **State Name**     | **Meaning**                                                                          |
+// | ---------- | ------------------ | ------------------------------------------------------------------------------------ |
+// | `0`        | `UNSENT`           | Request object is created, but `open()` has **not** been called yet.                 |
+// | `1`        | `OPENED`           | `open()` has been called — you can now call `send()`.                                |
+// | `2`        | `HEADERS_RECEIVED` | `send()` has been called — HTTP **response headers** and status are available.       |
+// | `3`        | `LOADING`          | The response body is being **downloaded** — data may be available in `responseText`. |
+// | `4`        | `DONE`             | The request has completed — the **full response** is available.                      |
+
+let uname;
+document.getElementById('fetchBtn').addEventListener('click', (e) => { // adding event listener to the button
+    e.preventDefault(); // to prevent the default behaviour of the button that is to refresh the page on click and submit the form
+    uname = document.getElementById('usernameInput').value
+//------------------------------------------------------------------------ main coode-------------------------------------
+   const requestUrl = `https://api.github.com/users/${uname}`;
+    
+   const xhr = new XMLHttpRequest(); // creating a object of XMLHTTPRequest class // instance
+   xhr.open('GET', requestUrl); // we can also use different method for sending like post and the other parameter is the url that we have to request // request will not be send here
+   
+   xhr.onreadystatechange = function () { //we arent using arrow function cause Arrow functions don’t bind their own this 
+   //onreadystatechange is an event handler in the XMLHttpRequest object that gets called every time the readyState of the request changes.
+       console.log(xhr.readyState);  // The readyState is a property of the XMLHttpRequest object that tells you the current state of the request
+       if(xhr.readyState === 4){ // checking if the readystate is 4 (done).
+        console.log(`Status: ${xhr.status}`);
+        const data = JSON.parse(this.responseText); // responseText is a property of the XMLHttpRequest object that contains the response data as a plain text string. so we have to change in object first using JSON.parse
+        console.log(data); 
+        console.log(`Name: ${data.name}`);
+        console.log(`Username: ${data.login}`);
+        console.log(`Followers: ${data.followers}`);
+        // we havent declare it anywhere, we are just using this so it will understand that we want repoonseText in current context
+        // this === xhr inside the callback.po
+        
+        const card = document.getElementById('profileCard');
+        card.innerHTML = `<h1>Name: ${data.name}</h1>
+                          <h2>Username: ${data.login}</h2>
+                          <h2>Followers: ${data.followers}</h2>`
+        document.querySelector('body').append(card);
+        }
+    }
+   xhr.send(); // the request will be send now
+});
+
+  </script>
+</body>
+</html>

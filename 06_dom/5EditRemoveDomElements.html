@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai aur code | DOM</title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+    <ul class="language">
+        <li>Javascript</li>
+    </ul>
+</body>
+<script>
+
+    // Adding 
+    function addElement (name) {   // both function work similarly but this one use innerHTML that is not optimize as its traverse the whole DOM tree
+        const li = document.createElement("li");
+        li.innerHTML = `${name}`   // here we are using the innerHTML and storing the name value as string but using innerHTML is not optimize as its traverse the whole DOM tree 
+        document.querySelector(".language").appendChild(li);
+    }
+    addElement("Java");
+
+    function addElementopti (name){ // Optimize approach
+        const li = document.createElement("li");
+        li.appendChild(document.createTextNode(name));   // here we are using createTextNode and then appendChild to append in the li its a optimize way
+        document.querySelector(".language").appendChild(li);
+    }
+    addElementopti("Rust");
+
+
+    // Editing 
+    const secondLang = document.querySelector("li:nth-child(2)"); // in nth-child we can use only number not string // java
+    console.log(secondLang.innerHTML); // java
+    secondLang.innerHTML = "ASM" // easiest way but not optimize
+    const newli = document.createElement('li');
+    newli.textContent = "msa" // same as innerHTML not so much difference just here we are creating an element above thats all
+    secondLang.replaceWith(newli); // replace the element with the given element
+
+    const firstLang = document.querySelector("li:first-child"); // outerHTML will work with this only type "li:first-child"
+    firstLang.outerHTML = '<li>typescript</li>'  // this is also one of the way but not optimize
+    // outerHTML replace the whole element with the given string of html
+
+    function rename (position, newname) {  // best and more optimize way
+        const secondLang = document.querySelector(`li:nth-child(${position})`);
+        const li = document.createElement("li");
+        li.appendChild(document.createTextNode(`${newname}`));
+        secondLang.replaceWith(li); // replace the element with the given element
+    }
+   rename(2, "nitin");
+
+    // remove 
+    function remove (position){
+        const val = document.querySelector(`li:nth-child(${position})`); // to remove an element
+        val.remove(); // remove the element
+        console.log(`Position ${position} Value: '${val.innerHTML}' removed`);
+
+    }
+    remove(3);
+
+</script>
+</html>

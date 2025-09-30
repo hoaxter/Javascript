@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>EVENTS-SET-TIME-OUT</h1>
+    <button id="stop">Stop</button>
+</body>
+<script>
+    // setTimeout : it only execute the thing or task one time after the given time it is alloted
+    // it is used to delay the execution of a function or task
+    // syntax: setTimeout(function, time in milliseconds) 
+    // it is an asynchronous function 
+    setTimeout(() => {  // here we are giving a handler/callback function in the settimeout we can even give the reference of the function and define it somewhere else
+        console.log("nitin");
+    }, 2000);
+
+    const sayMyName = function(){
+        console.log("nitin");
+    }
+
+    setTimeout(sayMyName, 2000); // we can also do this by giving the function reference
+
+    // note: there are some new method instead of innerHTML like setHTML.
+
+    const changeText = function(){
+        document.querySelector('h1').innerHTML = "best JS series"
+    }
+    const changeMe = setTimeout(changeText, 2000); // here we are taking the reference of setTimeout into a constant variable
+
+    // to stop the above change we created a stop button and will be using the clearTimeout
+    document.querySelector('#stop').addEventListener('click', function(){
+        clearTimeout(changeMe) // clearTimeout needs the reference of the setTimeout that it have to clear
+        console.log("STOPPED"); 
+    })
+
+</script>
+</html>
